@@ -635,9 +635,7 @@
 	/* API_GetDBPage: http://www.quickbase.com/api-guide/index.html#get_db_page.html */
 	public function get_db_page($page_id) {
 		if($this->xml) {
-			$xml_packet = '
-'.$page_id.'
-				';
+			$xml_packet = ''.$page_id.'';
 			$response = $this->transmit($xml_packet, 'API_GetDBPage');
 		}
 		else {
@@ -717,31 +715,26 @@
 		}
 		return false;
 	}
-
 	/* API_GetUserRole: http://www.quickbase.com/api-guide/index.html#getuserrole.html */
-  public function get_user_role () {
-	  if($this->xml) {
-	    $xml_packet = new SimpleXMLElement('<qdbapi></qdbapi>');
-	    $xml_packet->addChild('ticket',$this->ticket);
-
-	                      if ($this->app_token)
-	      $xml_packet->addChild('apptoken', $this->app_token);
-	    $xml_packet->addChild('uid', $this->user_id);
-	                      $xml_packet = $xml_packet->asXML();
-	    $response = $this->transmit($xml_packet, 'API_GetUserRole');
-	  }
-	  else {
-	    $url_string = $this->qb_ssl . $this->db_id. "?act=API_GetUserRole&ticket=". $this->ticket;
-
-	    $response = $this->transmit($url_string);
-	  }
-
-	  if($response) {
-	    return $response;
-	  }
-    return false;
-  }
-  
+	public function get_user_role () {
+		if($this->xml) {
+			$xml_packet = new SimpleXMLElement('<qdbapi></qdbapi>');
+			$xml_packet->addChild('ticket',$this->ticket);
+			if ($this->app_token)
+				$xml_packet->addChild('apptoken', $this->app_token);
+			$xml_packet->addChild('uid', $this->user_id);
+			$xml_packet = $xml_packet->asXML();
+			$response = $this->transmit($xml_packet, 'API_GetUserRole');
+		}
+		else {
+			$url_string = $this->qb_ssl . $this->db_id. "?act=API_GetUserRole&ticket=". $this->ticket;
+			$response = $this->transmit($url_string);
+		}
+		if($response) {
+			return $response;
+		}
+		return false;
+	}
 	/* API_GrantedDB's: http://www.quickbase.com/api-guide/index.html */
 	public function granted_dbs () {
 		if($this->xml) {
